@@ -1,20 +1,23 @@
 //Tanggal : 01 Maret 19
 //Jam : 03.11
+//Update 01.03.19 Menambahkan prosedur in_pcb_size
 
 #include <stdio.h>
 #include <stdlib.h>
 
 //HEADER
 void menu_utama(int * in);
-void submenu();
+void submenu(int n, int m);
 void print_menu_utama();
 void print_sub_menu();
+void print_layout(int x, int y);
 int input_validation(char * line, int range_bawah, int range_atas);
+void in_pcb_size(int * n,int * m);
 int keluar(char * line);
 //HEADER
 
 int main() {
-	int input; 
+	int input, n, m; 
 	int isExit = 0;
 	
 	while (isExit == 0) {	
@@ -24,14 +27,14 @@ int main() {
 			case 1: //Buat Proyek Baru
 				printf("\n====== Membuat Proyek Baru ======");
 				printf("\nMasukkan nama proyek: ");
-				printf("\nMasukkan ukuran PCM NxM (N,M<40): ");
-				submenu();
+				in_pcb_size(&n,&m);
+				submenu(n,m);
 				break;
 				
 			case 2: // Muat Proyek dari Berkas
 				printf("====== Memuat Proyek ======");
 				printf("\nMasukkan nama proyek: ");
-				submenu();
+				submenu(n,m);
 				break;
 				
 			case 3: //Keluar
@@ -49,7 +52,7 @@ void menu_utama(int * in) {
 	*in = input_validation("Masukan: ",1,3);
 }
 
-void submenu() {
+void submenu(int n, int m) {
 	int input;
 	int isExit = 0;
 	
@@ -61,6 +64,7 @@ void submenu() {
 		switch(input){
 			case 1: //Tampilkan Layout
 				printf("\n[Layout Rangkaian pada PCB Dot Matriks]\n");
+				print_layout(n,m);
 				break;
 				
 			case 2: // Layout Manual
@@ -114,6 +118,25 @@ void print_sub_menu() {
 	printf("\t8. Simpan Proyek dan Keluar \n");
 }
 
+/*Fungsi Print Layout */
+void print_layout(int x, int y) {
+	int i,j;
+	int size_x = x+1;
+	int size_y = y+1;
+	for (i =0; i < size_y; i++) {
+		for (j =0; j < size_x; j++) {
+			if(i == 0 && j>0) {
+				printf("%d ", j); //sumbu X
+			}else if (j == 0 && i > 0){
+				printf("%d ", i); //sumbu Y
+			}else {
+				printf("_ "); // isi yang kosong
+			}
+		}
+		printf("\n"); //pindah baris
+	}
+}
+
 /*Fungsi input dengan validasi range input dan pesan custom */
 int input_validation(char * line, int range_bawah, int range_atas){
 	int isValid = 0;
@@ -128,6 +151,27 @@ int input_validation(char * line, int range_bawah, int range_atas){
 		}
 	}
 	return in;
+}
+
+void in_pcb_size(int * n,int * m) {
+	int valid_n = 0;
+	int valid_m = 0;
+	while (valid_n == 0 || valid_m == 0) {
+		printf("\nMasukkan ukuran PCM NxM (N,M<=40): ");
+		scanf("%d %d",n,m);
+		if (*n > 0 && *n < 41) {
+			valid_n = 1;
+		} else {
+			printf("Input N salah!");
+			valid_n = 0;
+		}	
+		if (*m > 0 && *m < 41) {
+			valid_m = 1;
+		} else {
+			printf("Input M salah!");
+			 valid_m = 0;
+		}
+	}
 }
 
 /*Fungsi keluar(mengubah validasi keluar menjadi 1) dengan pesan custom*/
