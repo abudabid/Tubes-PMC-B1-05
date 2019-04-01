@@ -1,6 +1,6 @@
 //Tanggal : 01 Maret 19
 //Jam : 03.11
-//Update 01.03.19 Menambahkan prosedur in_pcb_size
+//Update 01.03.19 Menambahkan prosedur in_pcb_size dan Fungsi  print layout
 
 #include <stdio.h>
 #include <stdlib.h>
