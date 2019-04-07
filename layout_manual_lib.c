@@ -228,17 +228,17 @@ float abs1, abs2;
 	abs2 = fabs(y1-y2);
 		if((abs1>syarat) || (abs2>syarat)){
 			return 1;
-			}
+			}return 0;
 }
 
 int cekT(int x1, int x2,int x3, int y1, int y2, int y3, int syarat){
 		if(((fabs(x1-x2)>syarat)||(fabs(y1-y2)>syarat)) && ((fabs(x1-x3)>syarat) || (fabs(y1-y3)>syarat)) && ((fabs(x3-x2)>syarat) || (fabs(y3-y2)>syarat))){
 			return 1;
-			}
+			} return 0;
 }
 
 int cekPCB(int x, int y, int N, int M){
 	if ((x>=1) && (x<=N) && (y>=1) && (y<=M)){
 return 1;
-	}		
+	}return 0;		
 }
