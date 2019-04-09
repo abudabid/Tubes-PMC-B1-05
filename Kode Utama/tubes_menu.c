@@ -12,6 +12,8 @@
 #include "layout_manual_lib.c"
 #include "routing_manual_lib.c"
 
+#define file_validasi "val_file.txt"
+
 
 //HEADER
 void menu_utama(int * in);
@@ -23,11 +25,13 @@ void print_routing(int x, int y);
 int input_validation(char * line, int range_bawah, int range_atas);
 void in_pcb_size(int * n,int * m);
 int keluar(char * line);
+int check(char * name);
 //HEADER
 
 int main() {
 	int input;
 	int isExit = 0;
+	char * name;
 	
 	while (isExit == 0) {	
 		menu_utama(&input);
@@ -36,6 +40,7 @@ int main() {
 			case 1: //Buat Proyek Baru
 				printf("\n====== Membuat Proyek Baru ======");
 				printf("\nMasukkan nama proyek: ");
+				gets(name);
 				in_pcb_size(&n,&m);
 				submenu(n,m);
 				break;
@@ -203,4 +208,22 @@ void in_pcb_size(int * n,int * m) {
 int keluar(char * line) { 
 	printf("%s",line);
 	return 1;
+}
+
+int check(char * name) {
+	FILE *validasi_filename = fopen("val_file.txt","r");
+	char cek[100];
+	int val = 0;//asumsi awal
+	while(!feof(validasi_filename)){
+		fscanf(validasi_filename,"%s",cek);
+		if(cek==*name){//ditemukan filename yang sama
+			val = 1;
+			break;
+		}
+	}
+	if (val==0){//filename belum ada
+		return 0;
+	} else {//filename sudah ada
+		return 1;
+	}
 }
